@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace BlazorLeaflet.Models;
 
-namespace BlazorLeaflet.Models
+public record GeoJsonDataLayer : InteractiveLayer
 {
-    public class GeoJsonDataLayer : InteractiveLayer
-    {
-        public string GeoJsonData { get; set; }
-    }
+    public string? GeoJsonData { get; set; }
 }

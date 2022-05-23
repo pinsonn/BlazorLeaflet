@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <RazorLangVersion>3.0</RazorLangVersion>
+    <TargetFramework>net6.0</TargetFramework>
     <Version>0.4.0-alpha</Version>
     <Authors>Mihai Stan</Authors>
-    <Company />
+    <Company/>
     <Description>BlazorLeaflet is a wrapper offering easy-to-use Blazor components that expose the Leaflet API in C#.</Description>
     <Copyright>Mihai Stan</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
@@ -14,13 +13,14 @@
     <PackageTags>blazor, leaflet, c#, js, interop</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <LangVersion>8</LangVersion>
+    <LangVersion>latestmajor</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0-rc1.19457.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0-rc1.19457.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.5"/>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.5"/>
   </ItemGroup>
 
 </Project>

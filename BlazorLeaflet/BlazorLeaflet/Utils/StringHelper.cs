@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Linq;
 
-namespace BlazorLeaflet.Utils
+namespace BlazorLeaflet.Utils;
+
+public static class StringHelper
 {
-    public class StringHelper
+    private static readonly Random Random = new();
+
+    public static string GetRandomString(int length)
     {
-
-        private static readonly Random _random = new Random();
-
-        public static string GetRandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[_random.Next(s.Length)]).ToArray());
-        }
-
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        return new(Enumerable.Repeat(chars, length)
+            .Select(s => s[Random.Next(s.Length)])
+            .ToArray());
     }
 }

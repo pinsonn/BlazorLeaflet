@@ -1,10 +1,9 @@
 ﻿using System.Drawing;
 
-namespace BlazorLeaflet.Models.Events
+namespace BlazorLeaflet.Models.Events;
+
+public class ResizeEvent : Event
 {
-    public class ResizeEvent : Event
-    {
-        public PointF OldSize { get; set; }
-        public PointF NewSize { get; set; }
-    }
+    public PointF OldSize { get; set; }
+    public PointF NewSize { get; set; }
 }
