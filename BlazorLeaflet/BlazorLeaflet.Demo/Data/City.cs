@@ -1,16 +1,16 @@
 ﻿using System.Drawing;
 
-namespace BlazorLeaflet.Samples.Data;
+namespace BlazorLeaflet.Demo.Data;
 
 public class City
 {
-    public string? CoatOfArmsImageUrl { get; set; }
+    public string? CoatOfArmsImageUrl { get; init; }
 
-    public string? Country { get; set; }
+    public string? Country { get; init; }
 
-    public string? Name { get; set; }
+    public string? Name { get; init; }
 
-    public string? Description { get; set; }
+    public string? Description { get; init; }
 
-    public PointF Coordinates { get; set; }
+    public PointF Coordinates { get; init; }
 }

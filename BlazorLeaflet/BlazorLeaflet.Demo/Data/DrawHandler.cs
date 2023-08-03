@@ -3,7 +3,7 @@ using BlazorLeaflet.Models.Events;
 using Microsoft.JSInterop;
 using Rectangle = BlazorLeaflet.Models.Rectangle;
 
-namespace BlazorLeaflet.Samples.Data;
+namespace BlazorLeaflet.Demo.Data;
 
 public class DrawHandler : IDisposable
 {
@@ -38,7 +38,7 @@ public class DrawHandler : IDisposable
 
     public void Dispose() => UnsubscribeFromMapEvents();
 
-    public event EventHandler DrawFinished;
+    public event EventHandler? DrawFinished;
 
     public void OnDrawCircleToggle(bool isToggled)
     {
@@ -88,7 +88,7 @@ public class DrawHandler : IDisposable
         else
         {
             // finish a line
-            if (_polygon.Shape?[0].Count() > 2 &&
+            if (_polygon.Shape?[0].Length > 2 &&
                 Math.Abs(_mouseClickEvents[0].ContainerPoint.X - e.ContainerPoint.X) < 10 &&
                 Math.Abs(_mouseClickEvents[0].ContainerPoint.Y - e.ContainerPoint.Y) < 10)
             {
@@ -130,8 +130,6 @@ public class DrawHandler : IDisposable
                 UpdatePolygon(latLng);
                 break;
         }
-
-        ;
     }
 
     private void UpdateRectangle(LatLng? latLng)

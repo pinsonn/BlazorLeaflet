@@ -73,7 +73,7 @@ public class Map
     /// <summary>
     ///     Event raised when the component has finished its first render.
     /// </summary>
-    public event Action OnInitialized;
+    public event Action? OnInitialized;
 
     /// <summary>
     ///     This method MUST be called only once by the Blazor component upon rendering, and never by the user.
@@ -122,9 +122,9 @@ public class Map
     ///     Get a read only collection of the current layers.
     /// </summary>
     /// <returns>A read only collection of layers.</returns>
-    public IReadOnlyCollection<Layer> GetLayers() => _layers.ToList().AsReadOnly();
+    public IEnumerable<Layer> GetLayers() => _layers.ToList().AsReadOnly();
 
-    private async Task OnLayersChanged(object sender, NotifyCollectionChangedEventArgs args)
+    private async Task OnLayersChanged(object _, NotifyCollectionChangedEventArgs args)
     {
         switch (args.Action)
         {

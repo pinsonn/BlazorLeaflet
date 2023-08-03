@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace BlazorLeaflet.Samples.Data;
+namespace BlazorLeaflet.Demo.Data;
 
 public class CityService
 {
@@ -33,7 +33,7 @@ public class CityService
         }
     };
 
-    public City FindCity(string name)
+    public City? FindCity(string name)
     {
         return _cities.FirstOrDefault(c =>
             string.Equals(c.Name, name, StringComparison.InvariantCultureIgnoreCase));
