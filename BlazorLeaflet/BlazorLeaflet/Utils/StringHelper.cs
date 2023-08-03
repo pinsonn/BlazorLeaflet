@@ -10,7 +10,7 @@ public static class StringHelper
     public static string GetRandomString(int length)
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        return new(Enumerable.Repeat(chars, length)
+        return new string(Enumerable.Repeat(chars, length)
             .Select(s => s[Random.Next(s.Length)])
             .ToArray());
     }

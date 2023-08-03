@@ -20,7 +20,7 @@ public static class LeafletInterops
 
     private static DotNetObjectReference<T> CreateLayerReference<T>(string mapId, T layer) where T : Layer
     {
-        DotNetObjectReference<T> result = DotNetObjectReference.Create(layer);
+        var result = DotNetObjectReference.Create(layer);
         LayerReferences.TryAdd(layer.Id, (result, mapId, layer));
         return result;
     }

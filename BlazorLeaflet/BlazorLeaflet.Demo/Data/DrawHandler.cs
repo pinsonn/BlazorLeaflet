@@ -136,7 +136,7 @@ public class DrawHandler : IDisposable
 
     private void UpdateRectangle(LatLng? latLng)
     {
-        _rectangle.Shape = new(
+        _rectangle.Shape = new RectangleF(
             _mouseClickEvents[0].LatLng.Lng,
             _mouseClickEvents[0].LatLng.Lat,
             latLng.Lng - _mouseClickEvents[0].LatLng.Lng,
@@ -158,9 +158,9 @@ public class DrawHandler : IDisposable
     {
         // copy over previous points, add a new one if LatLng defined
         int size = _mouseClickEvents.Count;
-        PointF[][] shape = new PointF[1][];
+        var shape = new PointF[1][];
         shape[0] = new PointF[latLng == null ? size : size + 1];
-        for (int i = 0; i < size; i++)
+        for (var i = 0; i < size; i++)
             shape[0][i] = _mouseClickEvents[i].LatLng.ToPointF();
         if (latLng != null)
             shape[0][size] = latLng.ToPointF();

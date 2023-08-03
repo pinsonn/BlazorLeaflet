@@ -32,7 +32,7 @@
 
   protected override void OnInitialized()
   {
-    _map = new(jsRuntime)
+    _map = new Map(jsRuntime)
     {
       Center = _startAt,
       Zoom = 4.8f
@@ -57,7 +57,7 @@
         },
         Fill = true,
         FillColor = Color.Blue,
-        Popup = new()
+        Popup = new Popup
         {
           Content = "How are you doing,"
         }
@@ -65,12 +65,12 @@
 
       _map.AddLayer(new Rectangle
       {
-        Shape = new(10f, 0f, 5f, 1f)
+        Shape = new RectangleF(10f, 0f, 5f, 1f)
       });
 
-      _circle = new()
+      _circle = new Circle
       {
-        Position = new(10f, 5f),
+        Position = new LatLng(10f, 5f),
         Radius = 10f
       };
       _map.AddLayer(_circle);
@@ -88,16 +88,16 @@
     {
       var marker = new Marker(city.Coordinates)
       {
-        Icon = new()
+        Icon = new Icon
         {
           Url = city.CoatOfArmsImageUrl,
           ClassName = "map-icon"
         },
-        Tooltip = new()
+        Tooltip = new Tooltip
         {
           Content = city.Name
         },
-        Popup = new()
+        Popup = new Popup
         {
           Content = city.Description
         }
@@ -109,12 +109,12 @@
 
   private void ZoomMap()
   {
-    _map.FitBounds(new(45.943f, 24.967f), new(46.943f, 25.967f), maxZoom: 5f);
+    _map.FitBounds(new PointF(45.943f, 24.967f), new PointF(46.943f, 25.967f), maxZoom: 5f);
   }
 
   private void PanToNY()
   {
-    _map.PanTo(new(40.713185f, -74.0072333f), true, 10f);
+    _map.PanTo(new PointF(40.713185f, -74.0072333f), true, 10f);
   }
 
 }

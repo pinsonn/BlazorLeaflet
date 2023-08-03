@@ -44,17 +44,17 @@
     {
       Draggable = true,
       Title = "Marker 1",
-      Popup = new()
+      Popup = new Popup
       {
         Content = $"I am at {_markerLatLng.Lat:0.00}° lat, {_markerLatLng.Lng:0.00}° lng"
       },
-      Tooltip = new()
+      Tooltip = new Tooltip
       {
         Content = "Click and drag to move me"
       }
     };
 
-    _map = new(jsRuntime)
+    _map = new Map(jsRuntime)
     {
       Center = _markerLatLng,
       Zoom = 4.8f
@@ -71,7 +71,7 @@
       _map.AddLayer(marker);
     };
 
-    _drawHandler = new(_map, jsRuntime);
+    _drawHandler = new DrawHandler(_map, jsRuntime);
 
     marker.OnMove += OnDrag;
     marker.OnMoveEnd += OnDragEnd;
