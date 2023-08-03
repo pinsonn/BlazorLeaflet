@@ -129,6 +129,10 @@ public class DrawHandler : IDisposable
             case DrawState.DrawingPolygon:
                 UpdatePolygon(latLng);
                 break;
+            case DrawState.None:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(latLng));
         }
     }
 
@@ -178,7 +182,7 @@ public class DrawHandler : IDisposable
     {
         UnsubscribeFromMapEvents();
         _drawState = DrawState.None;
-        DrawFinished?.Invoke(this, null);
+        DrawFinished?.Invoke(this, EventArgs.Empty);
     }
 
     private void UnsubscribeFromMapEvents()

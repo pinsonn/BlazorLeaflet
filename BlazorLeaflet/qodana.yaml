@@ -26,3 +26,4 @@ exclude:
   - name: MemberCanBePrivate.Global
   - name: UnusedMember.Global
   - name: UnusedAutoPropertyAccessor.Global
+  - name: ClassNeverInstantiated.Global
