@@ -46,7 +46,7 @@
       Title = "Marker 1",
       Popup = new()
       {
-        Content = string.Format("I am at {0:0.00}° lat, {1:0.00}° lng", _markerLatLng.Lat, _markerLatLng.Lng)
+        Content = $"I am at {_markerLatLng.Lat:0.00}° lat, {_markerLatLng.Lng:0.00}° lng"
       },
       Tooltip = new()
       {
@@ -86,7 +86,7 @@
   private async void OnDragEnd(Marker marker, Event e)
   {
     marker.Position = _markerLatLng;
-    marker.Popup.Content = string.Format("I am now at {0:0.00}° lat, {1:0.00}° lng", _markerLatLng.Lat, _markerLatLng.Lng);
+    marker.Popup.Content = $"I am now at {_markerLatLng.Lat:0.00}° lat, {_markerLatLng.Lng:0.00}° lng";
     await LeafletInterops.UpdatePopupContent(jsRuntime, _map.Id, marker);
   }
 }
