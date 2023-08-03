@@ -55,7 +55,7 @@ public static class LeafletInterops
                 CreateLayerReference(mapId, image)),
             GeoJsonDataLayer geo => jsRuntime.InvokeVoidAsync($"{BaseObjectContainer}.addGeoJsonLayer", mapId, geo,
                 CreateLayerReference(mapId, geo)),
-            _ => throw new NotImplementedException($"The layer {typeof(Layer).Name} has not been implemented.")
+            _ => throw new NotImplementedException($"The layer {nameof(Layer)} has not been implemented.")
         };
     }
 
@@ -80,7 +80,7 @@ public static class LeafletInterops
             Circle circle => jsRuntime.InvokeVoidAsync($"{BaseObjectContainer}.updateCircle", mapId, circle),
             Polygon polygon => jsRuntime.InvokeVoidAsync($"{BaseObjectContainer}.updatePolygon", mapId, polygon),
             Polyline polyline => jsRuntime.InvokeVoidAsync($"{BaseObjectContainer}.updatePolyline", mapId, polyline),
-            _ => throw new NotImplementedException($"The layer {typeof(Layer).Name} has not been implemented.")
+            _ => throw new NotImplementedException($"The layer {nameof(Layer)} has not been implemented.")
         };
 
     public static ValueTask FitBounds(IJSRuntime jsRuntime, string mapId, PointF corner1, PointF corner2,
