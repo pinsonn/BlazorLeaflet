@@ -17,10 +17,9 @@ namespace BlazorLeaflet;
 public class Map
 {
     private readonly IJSRuntime _jsRuntime;
+    private readonly ObservableCollection<Layer> _layers = new();
 
     private bool _isInitialized;
-
-    private readonly ObservableCollection<Layer> _layers = new();
 
     public Map(IJSRuntime jsRuntime)
     {
@@ -124,13 +123,14 @@ public class Map
     /// <returns>A read only collection of layers.</returns>
     public IEnumerable<Layer> GetLayers() => _layers.ToList().AsReadOnly();
 
-    private async Task OnLayersChanged(object _, NotifyCollectionChangedEventArgs args)
+    // ReSharper disable once UnusedParameter.Local
+    private async Task OnLayersChanged(object? sender, NotifyCollectionChangedEventArgs args)
     {
         switch (args.Action)
         {
             case NotifyCollectionChangedAction.Add:
             {
-                foreach (object? item in args.NewItems!)
+                foreach (var item in args.NewItems!)
                 {
                     var layer = item as Layer;
                     await LeafletInterops.AddLayer(_jsRuntime, Id, layer);
@@ -140,50 +140,50 @@ public class Map
             }
             case NotifyCollectionChangedAction.Remove:
             {
-                foreach (object? item in args.OldItems!)
+                foreach (var item in args.OldItems!)
                     if (item is Layer layer)
                         await LeafletInterops.RemoveLayer(_jsRuntime, Id, layer.Id);
                 break;
             }
             case NotifyCollectionChangedAction.Replace or NotifyCollectionChangedAction.Move:
             {
-                foreach (object? oldItem in args.OldItems!)
+                foreach (var oldItem in args.OldItems!)
                     if (oldItem is Layer layer)
                         await LeafletInterops.RemoveLayer(_jsRuntime, Id, layer.Id);
 
-                foreach (object? newItem in args.NewItems!)
-                    await LeafletInterops.AddLayer(_jsRuntime, Id, newItem as Layer);
+                foreach (var newItem in args.NewItems!)
+                    if (newItem is Layer layer)
+                        await LeafletInterops.AddLayer(_jsRuntime, Id, layer);
                 break;
             }
         }
     }
 
     public async Task FitBounds(PointF corner1, PointF corner2, PointF? padding = null, float? maxZoom = null)
-    {
-        await LeafletInterops.FitBounds(_jsRuntime, Id, corner1, corner2, padding, maxZoom);
-    }
+        => await LeafletInterops.FitBounds(_jsRuntime, Id, corner1, corner2, padding, maxZoom);
 
-    public async Task PanTo(PointF position, bool animate = false, float duration = 0.25f, float easeLinearity = 0.25f,
-        bool noMoveStart = false)
-    {
-        await LeafletInterops.PanTo(_jsRuntime, Id, position, animate, duration, easeLinearity, noMoveStart);
-    }
+    public async Task PanTo(PointF position, bool animate = false, float duration = 0.25f, float easeLinearity = 0.25f, bool noMoveStart = false)
+        => await LeafletInterops.PanTo(_jsRuntime, Id, position, animate, duration, easeLinearity, noMoveStart);
 
-    public async Task<LatLng> GetCenter() => await LeafletInterops.GetCenter(_jsRuntime, Id);
+    public async Task<LatLng> GetCenter()
+        => await LeafletInterops.GetCenter(_jsRuntime, Id);
 
-    public async Task<float> GetZoom() => await LeafletInterops.GetZoom(_jsRuntime, Id);
+    public async Task<float> GetZoom()
+        => await LeafletInterops.GetZoom(_jsRuntime, Id);
 
     /// <summary>
     ///     Increases the zoom level by one notch.
     ///     If <c>shift</c> is held down, increases it by three.
     /// </summary>
-    public async Task ZoomIn(MouseEventArgs e) => await LeafletInterops.ZoomIn(_jsRuntime, Id, e);
+    public async Task ZoomIn(MouseEventArgs e)
+        => await LeafletInterops.ZoomIn(_jsRuntime, Id, e);
 
     /// <summary>
     ///     Decreases the zoom level by one notch.
     ///     If <c>shift</c> is held down, decreases it by three.
     /// </summary>
-    public async Task ZoomOut(MouseEventArgs e) => await LeafletInterops.ZoomOut(_jsRuntime, Id, e);
+    public async Task ZoomOut(MouseEventArgs e)
+        => await LeafletInterops.ZoomOut(_jsRuntime, Id, e);
 
     #region events
 
@@ -194,82 +194,98 @@ public class Map
     public event MapEventHandler? OnZoomLevelsChange;
 
     [JSInvokable]
-    public void NotifyZoomLevelsChange(Event e) => OnZoomLevelsChange?.Invoke(this, e);
+    public void NotifyZoomLevelsChange(Event e)
+        => OnZoomLevelsChange?.Invoke(this, e);
 
     public event MapResizeEventHandler? OnResize;
 
     [JSInvokable]
-    public void NotifyResize(ResizeEvent e) => OnResize?.Invoke(this, e);
+    public void NotifyResize(ResizeEvent e)
+        => OnResize?.Invoke(this, e);
 
     public event MapEventHandler? OnUnload;
 
     [JSInvokable]
-    public void NotifyUnload(Event e) => OnUnload?.Invoke(this, e);
+    public void NotifyUnload(Event e)
+        => OnUnload?.Invoke(this, e);
 
     public event MapEventHandler? OnViewReset;
 
     [JSInvokable]
-    public void NotifyViewReset(Event e) => OnViewReset?.Invoke(this, e);
+    public void NotifyViewReset(Event e)
+        => OnViewReset?.Invoke(this, e);
 
     public event MapEventHandler? OnLoad;
 
     [JSInvokable]
-    public void NotifyLoad(Event e) => OnLoad?.Invoke(this, e);
+    public void NotifyLoad(Event e)
+        => OnLoad?.Invoke(this, e);
 
     public event MapEventHandler? OnZoomStart;
 
     [JSInvokable]
-    public void NotifyZoomStart(Event e) => OnZoomStart?.Invoke(this, e);
+    public void NotifyZoomStart(Event e)
+        => OnZoomStart?.Invoke(this, e);
 
     public event MapEventHandler? OnMoveStart;
 
     [JSInvokable]
-    public void NotifyMoveStart(Event e) => OnMoveStart?.Invoke(this, e);
+    public void NotifyMoveStart(Event e)
+        => OnMoveStart?.Invoke(this, e);
 
     public event MapEventHandler? OnZoom;
 
     [JSInvokable]
-    public void NotifyZoom(Event e) => OnZoom?.Invoke(this, e);
+    public void NotifyZoom(Event e)
+        => OnZoom?.Invoke(this, e);
 
     public event MapEventHandler? OnMove;
 
     [JSInvokable]
-    public void NotifyMove(Event e) => OnMove?.Invoke(this, e);
+    public void NotifyMove(Event e)
+        => OnMove?.Invoke(this, e);
 
     public event MapEventHandler? OnZoomEnd;
 
     [JSInvokable]
-    public void NotifyZoomEnd(Event e) => OnZoomEnd?.Invoke(this, e);
+    public void NotifyZoomEnd(Event e)
+        => OnZoomEnd?.Invoke(this, e);
 
     public event MapEventHandler? OnMoveEnd;
 
     [JSInvokable]
-    public void NotifyMoveEnd(Event e) => OnMoveEnd?.Invoke(this, e);
+    public void NotifyMoveEnd(Event e)
+        => OnMoveEnd?.Invoke(this, e);
 
     public event MouseEventHandler? OnMouseMove;
 
     [JSInvokable]
-    public void NotifyMouseMove(MouseEvent eventArgs) => OnMouseMove?.Invoke(this, eventArgs);
+    public void NotifyMouseMove(MouseEvent eventArgs)
+        => OnMouseMove?.Invoke(this, eventArgs);
 
     public event MapEventHandler? OnKeyPress;
 
     [JSInvokable]
-    public void NotifyKeyPress(Event eventArgs) => OnKeyPress?.Invoke(this, eventArgs);
+    public void NotifyKeyPress(Event eventArgs)
+        => OnKeyPress?.Invoke(this, eventArgs);
 
     public event MapEventHandler? OnKeyDown;
 
     [JSInvokable]
-    public void NotifyKeyDown(Event eventArgs) => OnKeyDown?.Invoke(this, eventArgs);
+    public void NotifyKeyDown(Event eventArgs)
+        => OnKeyDown?.Invoke(this, eventArgs);
 
     public event MapEventHandler? OnKeyUp;
 
     [JSInvokable]
-    public void NotifyKeyUp(Event eventArgs) => OnKeyUp?.Invoke(this, eventArgs);
+    public void NotifyKeyUp(Event eventArgs)
+        => OnKeyUp?.Invoke(this, eventArgs);
 
     public event MouseEventHandler? OnPreClick;
 
     [JSInvokable]
-    public void NotifyPreClick(MouseEvent eventArgs) => OnPreClick?.Invoke(this, eventArgs);
+    public void NotifyPreClick(MouseEvent eventArgs)
+        => OnPreClick?.Invoke(this, eventArgs);
 
     #endregion events
 
@@ -284,37 +300,44 @@ public class Map
     public event MouseEventHandler? OnClick;
 
     [JSInvokable]
-    public void NotifyClick(MouseEvent eventArgs) => OnClick?.Invoke(this, eventArgs);
+    public void NotifyClick(MouseEvent eventArgs)
+        => OnClick?.Invoke(this, eventArgs);
 
     public event MouseEventHandler? OnDblClick;
 
     [JSInvokable]
-    public void NotifyDblClick(MouseEvent eventArgs) => OnDblClick?.Invoke(this, eventArgs);
+    public void NotifyDblClick(MouseEvent eventArgs)
+        => OnDblClick?.Invoke(this, eventArgs);
 
     public event MouseEventHandler? OnMouseDown;
 
     [JSInvokable]
-    public void NotifyMouseDown(MouseEvent eventArgs) => OnMouseDown?.Invoke(this, eventArgs);
+    public void NotifyMouseDown(MouseEvent eventArgs)
+        => OnMouseDown?.Invoke(this, eventArgs);
 
     public event MouseEventHandler? OnMouseUp;
 
     [JSInvokable]
-    public void NotifyMouseUp(MouseEvent eventArgs) => OnMouseUp?.Invoke(this, eventArgs);
+    public void NotifyMouseUp(MouseEvent eventArgs)
+        => OnMouseUp?.Invoke(this, eventArgs);
 
     public event MouseEventHandler? OnMouseOver;
 
     [JSInvokable]
-    public void NotifyMouseOver(MouseEvent eventArgs) => OnMouseOver?.Invoke(this, eventArgs);
+    public void NotifyMouseOver(MouseEvent eventArgs)
+        => OnMouseOver?.Invoke(this, eventArgs);
 
     public event MouseEventHandler? OnMouseOut;
 
     [JSInvokable]
-    public void NotifyMouseOut(MouseEvent eventArgs) => OnMouseOut?.Invoke(this, eventArgs);
+    public void NotifyMouseOut(MouseEvent eventArgs)
+        => OnMouseOut?.Invoke(this, eventArgs);
 
     public event MouseEventHandler? OnContextMenu;
 
     [JSInvokable]
-    public void NotifyContextMenu(MouseEvent eventArgs) => OnContextMenu?.Invoke(this, eventArgs);
+    public void NotifyContextMenu(MouseEvent eventArgs)
+        => OnContextMenu?.Invoke(this, eventArgs);
 
     #endregion InteractiveLayerEvents
 }

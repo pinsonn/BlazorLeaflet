@@ -77,12 +77,12 @@
   }
 
   private readonly LatLng _startAt = new(47.5574007f, 16.3918687f);
-  public string CityName { get; set; }
+  private string? CityName { get; set; }
 
   private void FindCity()
   {
     _circle.Radius = 5000000f;
-    City? city = CityService.FindCity(CityName);
+    var city = CityService.FindCity(CityName);
     if (city == null)
       return;
     
@@ -108,12 +108,12 @@
 
   private void ZoomMap()
   {
-    _map.FitBounds(new PointF(45.943f, 24.967f), new PointF(46.943f, 25.967f), maxZoom: 5f);
+    _map?.FitBounds(new PointF(45.943f, 24.967f), new PointF(46.943f, 25.967f), maxZoom: 5f);
   }
 
   private void PanToNY()
   {
-    _map.PanTo(new PointF(40.713185f, -74.0072333f), true, 10f);
+    _map?.PanTo(new PointF(40.713185f, -74.0072333f), true, 10f);
   }
 
 }

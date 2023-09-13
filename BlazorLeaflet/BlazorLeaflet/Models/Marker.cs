@@ -27,7 +27,7 @@ public record Marker(LatLng? Position) : InteractiveLayer
     ///     customize the marker icon. If not specified, a common instance of
     ///     <see href="https://leafletjs.com/reference-1.5.0.html#icon-default">L.Icon.Default</see> is used.
     /// </summary>
-    public Icon Icon { get; set; }
+    public Icon? Icon { get; set; }
 
     /// <summary>
     ///     Whether the marker can be tabbed to with a keyboard and clicked by pressing enter.
@@ -97,9 +97,7 @@ public record Marker(LatLng? Position) : InteractiveLayer
 
     [JSInvokable]
     public void NotifyMove(DragEvent eventArgs)
-    {
-        OnMove?.Invoke(this, eventArgs);
-    }
+        => OnMove?.Invoke(this, eventArgs);
 
     public delegate void EventHandlerMarker(Marker sender, Event e);
 
@@ -107,25 +105,19 @@ public record Marker(LatLng? Position) : InteractiveLayer
 
     [JSInvokable]
     public void NotifyDragStart(Event eventArgs)
-    {
-        OnDragStart?.Invoke(this, eventArgs);
-    }
+        => OnDragStart?.Invoke(this, eventArgs);
 
     public event EventHandlerMarker? OnMoveStart;
 
     [JSInvokable]
     public void NotifyMoveStart(Event eventArgs)
-    {
-        OnMoveStart?.Invoke(this, eventArgs);
-    }
+        => OnMoveStart?.Invoke(this, eventArgs);
 
     public event DragEventHandler? OnDrag;
 
     [JSInvokable]
     public void NotifyDrag(DragEvent eventArgs)
-    {
-        OnDrag?.Invoke(this, eventArgs);
-    }
+        => OnDrag?.Invoke(this, eventArgs);
 
     public delegate void DragEndEventHandler(Marker sender, DragEndEvent e);
 
@@ -133,17 +125,13 @@ public record Marker(LatLng? Position) : InteractiveLayer
 
     [JSInvokable]
     public void NotifyDragEnd(DragEndEvent eventArgs)
-    {
-        OnDragEnd?.Invoke(this, eventArgs);
-    }
+        => OnDragEnd?.Invoke(this, eventArgs);
 
     public event EventHandlerMarker? OnMoveEnd;
 
     [JSInvokable]
     public void NotifyMoveEnd(Event eventArgs)
-    {
-        OnMoveEnd?.Invoke(this, eventArgs);
-    }
+        => OnMoveEnd?.Invoke(this, eventArgs);
 
     #endregion
 }

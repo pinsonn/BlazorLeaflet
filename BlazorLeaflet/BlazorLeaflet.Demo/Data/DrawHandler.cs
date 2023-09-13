@@ -116,7 +116,7 @@ public class DrawHandler : IDisposable
         UpdateShape(e.LatLng);
     }
 
-    private void UpdateShape(LatLng? latLng)
+    private void UpdateShape(LatLng latLng)
     {
         switch (_drawState)
         {
@@ -136,7 +136,7 @@ public class DrawHandler : IDisposable
         }
     }
 
-    private void UpdateRectangle(LatLng? latLng)
+    private void UpdateRectangle(LatLng latLng)
     {
         _rectangle.Shape = new RectangleF(
             _mouseClickEvents[0].LatLng.Lng,
@@ -147,7 +147,7 @@ public class DrawHandler : IDisposable
         AddOrUpdateShape(_rectangle);
     }
 
-    private void UpdateCircle(LatLng? latLng)
+    private void UpdateCircle(LatLng latLng)
     {
         _circle.Position = _mouseClickEvents[0].LatLng;
         // get a rough approximate for now: have to convert to meters - there should be better more precise algorithms out there
@@ -159,7 +159,7 @@ public class DrawHandler : IDisposable
     private void UpdatePolygon(LatLng? latLng)
     {
         // copy over previous points, add a new one if LatLng defined
-        int size = _mouseClickEvents.Count;
+        var size = _mouseClickEvents.Count;
         var shape = new PointF[1][];
         shape[0] = new PointF[latLng == null ? size : size + 1];
         for (var i = 0; i < size; i++)

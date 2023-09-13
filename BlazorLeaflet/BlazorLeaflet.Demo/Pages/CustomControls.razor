@@ -1,5 +1,5 @@
 ﻿@page "/customcontrols"
-@inject IJSRuntime jsRuntime
+@inject IJSRuntime JSRuntime
 
 <h1>Blazor Leaflet</h1>
 
@@ -10,10 +10,13 @@
   You can also hold <kbd>shift</kbd> to zoom faster.
 </p>
 
-<div class="btn-group mb-2" role="group">
-  <button type="button" class="btn btn-secondary" @onclick="e => _map?.ZoomIn(e)">Zoom in</button>
-  <button type="button" class="btn btn-secondary" @onclick="e => _map?.ZoomOut(e)">Zoom out</button>
-</div>
+@if (_map is not null)
+{
+  <div class="btn-group mb-2" role="group">
+    <button type="button" class="btn btn-secondary" @onclick="e => _map.ZoomIn(e)">Zoom in</button>
+    <button type="button" class="btn btn-secondary" @onclick="e => _map.ZoomOut(e)">Zoom out</button>
+  </div>
+}
 
 <div style="height: 500px; width: 500px;">
   <LeafletMap Map="_map"/>
@@ -23,7 +26,7 @@
 {
   private Map? _map;
 
-  private readonly LatLng? _markerLatLng = new()
+  private readonly LatLng _markerLatLng = new()
   {
     Lat = 47.5574007f, Lng = 16.3918687f
   };
@@ -44,7 +47,7 @@
       }
     };
 
-    _map = new Map(jsRuntime)
+    _map = new Map(JSRuntime)
     {
       Center = _markerLatLng,
       Zoom = 4.8f,
