@@ -25,58 +25,58 @@
 </div>
 
 @code{
-  
-  private Map? _map;
-  private Circle? _circle;
 
-  protected override void OnInitialized()
-  {
-    _map = new Map(JSRuntime)
+    private Map? _map;
+    private Circle? _circle;
+
+    protected override void OnInitialized()
     {
-      Center = _startAt,
-      Zoom = 4.8f
-    };
-
-    _map.OnInitialized += () =>
-    {
-      _map.AddLayer(new TileLayer
-      {
-        UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
-      });
-
-      _map.AddLayer(new Polygon
-      {
-        Shape = new[]
+        _map = new Map(JSRuntime)
         {
+            Center = _startAt,
+            Zoom = 4.8f
+        };
+
+        _map.OnInitialized += () =>
+        {
+            _map.AddLayer(new TileLayer
+                {
+                    UrlTemplate = "https://localhost:8080/tiles/{z}/{x}/{y}.png",
+                    Attribution = "&copy; Battlespace Simulations, Inc."
+                });
+
+            _map.AddLayer(new Polygon
+                {
+                    Shape = new[]
+              {
           new[]
           {
             new PointF(37f, -109.05f), new PointF(41f, -109.03f), new PointF(41f, -102.05f), new PointF(37f, -102.04f)
           }
-        },
-        Fill = true,
-        FillColor = Color.Blue,
-        Popup = new Popup
-        {
-          Content = "How are you doing,"
-        }
-      });
+            },
+                    Fill = true,
+                    FillColor = Color.Blue,
+                    Popup = new Popup
+                    {
+                        Content = "How are you doing,"
+                    }
+                });
 
-      _map.AddLayer(new Rectangle
-      {
-        Shape = new RectangleF(10f, 0f, 5f, 1f)
-      });
+            _map.AddLayer(new Rectangle
+                {
+                    Shape = new RectangleF(10f, 0f, 5f, 1f)
+                });
 
-      _circle = new Circle
-      {
-        Position = new LatLng(10f, 5f),
-        Radius = 10f
-      };
-      _map.AddLayer(_circle);
-    };
-  }
+            _circle = new Circle
+                {
+                    Position = new LatLng(10f, 5f),
+                    Radius = 10f
+                };
+            _map.AddLayer(_circle);
+        };
+    }
 
-  private readonly LatLng _startAt = new(47.5574007f, 16.3918687f);
+    private readonly LatLng _startAt = new(47.5574007f, 16.3918687f);
   private string? CityName { get; set; }
 
   private void FindCity()
